@@ -1,0 +1,6 @@
+﻿  main.cpp
+c:\users\edwin\source\repos\gradientdescent\gradientdescent\main.cpp(91): warning C4018: '<': signed/unsigned mismatch
+c:\users\edwin\source\repos\gradientdescent\gradientdescent\main.cpp(103): warning C4018: '<': signed/unsigned mismatch
+c:\users\edwin\source\repos\gradientdescent\gradientdescent\main.cpp(113): warning C4018: '<': signed/unsigned mismatch
+c:\users\edwin\source\repos\gradientdescent\gradientdescent\main.cpp(153): warning C4018: '<': signed/unsigned mismatch
+  GradientDescent.vcxproj -> C:\Users\edwin\source\repos\GradientDescent\Debug\GradientDescent.exe
