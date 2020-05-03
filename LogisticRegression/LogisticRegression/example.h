@@ -26,8 +26,7 @@ class TrainingExample :
 	public Example
 {
 public:
-	TrainingExample(const std::vector<double>& features, int target) :
-		Example(features, target) {}
+	TrainingExample(const std::vector<double>& features, int target);
 
 	virtual double getFeature(int i) override;
 	virtual std::vector<double>& getFeatures() override;

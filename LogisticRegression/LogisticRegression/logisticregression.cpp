@@ -1,14 +1,15 @@
 #include "logisticregression.h"
 
-#include <iostream>
 #include <math.h>
+#include <limits>
+#include <iostream>
 #include <algorithm>
 
 LogisticRegression::LogisticRegression() :
 	m_examples(0),
 	m_features(0),
-	m_learningRate(0.000002),
-	m_threshold(0.00139)
+	m_learningRate(0.000001),
+	m_threshold(0.002)
 {}
 
 LogisticRegression::LogisticRegression(const std::vector<TrainingExample>& trainingData) :
@@ -29,7 +30,7 @@ void LogisticRegression::addExample(const TrainingExample& value)
 	if (m_examples == 1)
 	{
 		m_features = m_trainingData[0].getFeatures().size();
-		m_theta = std::vector<double>(m_features, 0);
+		m_theta = std::vector<double>(m_features, 30.0);
 	}
 }
 
@@ -73,6 +74,8 @@ void LogisticRegression::log(const std::vector<double>& theta, const std::vector
 			std::cout << minDelta[i] << " ";
 		std::cout << std::endl;
 	}
+
+	std::cout << std::endl;
 }
 
 std::vector<double> LogisticRegression::theta() const
@@ -102,6 +105,16 @@ double LogisticRegression::derivativeValue(int j) const
 	return value;
 }
 
+std::vector<double> LogisticRegression::calculate() const
+{
+	auto newTheta = m_theta;
+
+	for (int i = 0; i < m_features; i++)
+		newTheta[i] -= m_learningRate * derivativeValue(i);
+
+	return newTheta;
+}
+
 std::vector<double> LogisticRegression::train()
 {
 	int count = 0;
@@ -113,7 +126,7 @@ std::vector<double> LogisticRegression::train()
 
 	while (!converged)
 	{
-		auto newTheta = train();
+		auto newTheta = calculate();
 
 		bool check = true;
 		for (int j = 0; j < m_features; j++)
@@ -143,6 +156,11 @@ std::vector<double> LogisticRegression::train()
 
 		count++;
 	}
+
+	std::cout << "theta: ";
+	for (auto th : m_theta)
+		std::cout << th << " ";
+	std::cout << std::endl;
 
 	return m_theta;
 }

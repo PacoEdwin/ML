@@ -1,7 +1,4 @@
 #pragma once
-#pragma once
-#ifndef GRADIENT_H
-#define GRADIENT_H
 
 // std includes
 #include <vector>
@@ -31,6 +28,7 @@ private:
 
 	double h(const Example& trainData) const;
 	double derivativeValue(int j) const;
+	std::vector<double> calculate() const;
 
 	unsigned m_examples;
 	unsigned m_features;
@@ -40,6 +38,4 @@ private:
 
 	std::vector<double> m_theta;
 	std::vector<TrainingExample> m_trainingData;
-}
-
-#endif
+};
