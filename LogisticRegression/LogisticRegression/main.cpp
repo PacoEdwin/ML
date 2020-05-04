@@ -5,6 +5,7 @@
 #include <string>
 #include <math.h>
 #include <algorithm>
+#include <sstream>
 
 // project includes
 #include "logisticregression.h"
@@ -34,13 +35,63 @@ int main()
 		fin.close();
 	}
 
-	//lr.setThreshold(0.00139);
-	//lr.setLearningRate(0.000002);
+	lr.setThreshold(0.005);
+	lr.setLearningRate(0.000001);
 
+	// train model
 	auto theta = lr.train();
 
+	// Test
 	{
-		ifstream fin("test.txt");
+		ifstream fin("test2.txt");
+		if (!fin.is_open())
+		{
+			cout << "Couldn't open file." << endl;
+			return 1;
+		}
+
+		double ans;
+		int correct = 0, size = 0;
+		vector<double> d(3, 1);
+		while (fin)
+		{
+			string s;
+			if (!getline(fin, s))
+				break;
+
+			istringstream ss(s);
+			vector<string> record;
+
+			while (ss)
+			{
+				string s;
+				if (!getline(ss, s, ','))
+					break;
+
+				record.push_back(s);
+			}
+
+			d[1] = stoi(record[0]);
+			d[2] = stoi(record[1]);
+			ans = stoi(record[2]);
+
+			TestExample t(d, ans);
+			if (lr.test(t))
+				correct++;
+
+			size++;
+		}
+
+		fin.close();
+
+		cout << "correct: " << correct << " size: " << size << endl;
+		cout << "accuracy: " << (double)100 * correct / size << endl;
+		cout << endl;
+	}
+
+	// Test
+	{
+		ifstream fin("test1.txt");
 		if (!fin.is_open())
 		{
 			cout << "Couldn't open file." << endl;

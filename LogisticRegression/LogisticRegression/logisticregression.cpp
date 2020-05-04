@@ -120,11 +120,11 @@ std::vector<double> LogisticRegression::train()
 	int count = 0;
 	int showLogIf = 300;
 	int minDeltaAbort = 4;
-	bool converged = false;
 
 	std::vector<double> minDelta(m_features, std::numeric_limits<double>::max());
 
-	while (!converged)
+	// repeat until converges
+	while (true)
 	{
 		auto newTheta = calculate();
 
@@ -149,10 +149,7 @@ std::vector<double> LogisticRegression::train()
 		m_theta = newTheta;
 
 		if (check == true)
-		{
-			converged = true;
 			break;
-		}
 
 		count++;
 	}
